@@ -3,11 +3,18 @@
     "height": 2868,
     "outputDir": "./output",
     "locales": [
+        "zh",
+        "zh_Hant",
+        "ko",
+        "ja",
+        "fr",
+        "de",
+        "es",
         "en",
-        "zh-cn"
+        "nl"
     ],
     "translation": {
-        "sourceLocale": "en",
+        "sourceLocale": "zh",
         "mode": "manual"
     },
     "layout": {
@@ -23,12 +30,124 @@
     },
     "screenshots": [
         {
-            "imagePath": "./assets/example/plan_edit.png",
-            "title": "Keep your best moments organized in one place",
+            "imagePath": "./assets/source/v7_1.png",
+            "title": "极简操作",
             "localizedTitles": {
-                "zh-cn": "把你最珍贵的瞬间整理在一个地方"
+                "zh_Hant": "極簡操作",
+                "ko": "간편한 조작",
+                "ja": "シンプル操作",
+                "fr": "Utilisation simple",
+                "de": "Einfache Bedienung",
+                "es": "Uso sencillo",
+                "en": "Simple controls",
+                "nl": "Eenvoudige bediening"
             },
-            "outputName": "organize-moments"
+            "outputName": "v7_1"
+        },
+        {
+            "imagePath": "./assets/source/v7_2.png",
+            "title": "数据精准",
+            "localizedTitles": {
+                "zh_Hant": "數據精準",
+                "ko": "정확한 데이터",
+                "ja": "正確なデータ",
+                "fr": "Données précises",
+                "de": "Präzise Daten",
+                "es": "Datos precisos",
+                "en": "Accurate data",
+                "nl": "Nauwkeurige gegevens"
+            },
+            "outputName": "v7_2"
+        },
+        {
+            "imagePath": "./assets/source/v7_3.png",
+            "title": "多种展示",
+            "localizedTitles": {
+                "zh_Hant": "多種展示",
+                "ko": "다양한 보기",
+                "ja": "複数の表示",
+                "fr": "Plusieurs affichages",
+                "de": "Mehrere Ansichten",
+                "es": "Vistas múltiples",
+                "en": "Multiple views",
+                "nl": "Meerdere weergaven"
+            },
+            "outputName": "v7_3"
+        },
+        {
+            "imagePath": "./assets/source/v7_4.png",
+            "title": "装备可视化",
+            "localizedTitles": {
+                "zh_Hant": "裝備視覺化",
+                "ko": "장비 시각화",
+                "ja": "装備の可視化",
+                "fr": "Visualisation de l'équipement",
+                "de": "Ausrüstung visuell darstellen",
+                "es": "Visualización del equipo",
+                "en": "Equipment visualization",
+                "nl": "Uitrusting zichtbaar maken"
+            },
+            "outputName": "v7_4"
+        },
+        {
+            "imagePath": "./assets/source/v7_5.png",
+            "title": "总览全局",
+            "localizedTitles": {
+                "zh_Hant": "總覽全局",
+                "ko": "전체 한눈에",
+                "ja": "全体を把握",
+                "fr": "Vue d'ensemble",
+                "de": "Alles im Blick",
+                "es": "Vista general",
+                "en": "Full overview",
+                "nl": "Volledig overzicht"
+            },
+            "outputName": "v7_5"
+        },
+        {
+            "imagePath": "./assets/source/v7_6.png",
+            "title": "详尽计划",
+            "localizedTitles": {
+                "zh_Hant": "詳盡計畫",
+                "ko": "세부 계획",
+                "ja": "詳しい計画",
+                "fr": "Plan détaillé",
+                "de": "Detaillierter Plan",
+                "es": "Plan detallado",
+                "en": "Detailed plan",
+                "nl": "Gedetailleerd plan"
+            },
+            "outputName": "v7_6"
+        },
+        {
+            "imagePath": "./assets/source/v7_7.png",
+            "title": "明细清晰",
+            "localizedTitles": {
+                "zh_Hant": "明細清晰",
+                "ko": "세부가 선명",
+                "ja": "明細が見やすい",
+                "fr": "Détails clairs",
+                "de": "Klare Details",
+                "es": "Detalles claros",
+                "en": "Clear details",
+                "nl": "Duidelijke details"
+            },
+            "outputName": "v7_7"
+        },
+        {
+            "imagePath": "./assets/source/v7_8.png",
+            "title": "整装待发",
+            "localizedTitles": {
+                "zh_Hant": "整裝待發",
+                "ko": "준비 완료",
+                "ja": "準備万端",
+                "fr": "Prêt à partir",
+                "de": "Startklar",
+                "es": "Listo para salir",
+                "en": "Ready to go",
+                "nl": "Klaar om te gaan"
+            },
+            "outputName": "v7_8"
         }
     ]
 }
