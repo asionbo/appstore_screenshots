@@ -1,0 +1,34 @@
+{
+    "width": 1320,
+    "height": 2868,
+    "outputDir": "./output",
+    "locales": [
+        "en",
+        "zh-cn"
+    ],
+    "translation": {
+        "sourceLocale": "en",
+        "mode": "manual"
+    },
+    "layout": {
+        "backgroundColor": "#ffffff",
+        "titleAreaRatio": 0.2,
+        "outerPaddingRatio": 0.05,
+        "phoneBorderRatio": 0.024,
+        "phoneCornerRadiusRatio": 0.06,
+        "titleColor": "#141414",
+        "titleAlign": "center",
+        "titleFontFamily": "Arial, Helvetica, sans-serif",
+        "titleFontWeight": 700
+    },
+    "screenshots": [
+        {
+            "imagePath": "./assets/example/plan_edit.png",
+            "title": "Keep your best moments organized in one place",
+            "localizedTitles": {
+                "zh-cn": "把你最珍贵的瞬间整理在一个地方"
+            },
+            "outputName": "organize-moments"
+        }
+    ]
+}
