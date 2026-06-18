@@ -40,7 +40,7 @@ export function createLayout({ width, height, layout, imageMeta }) {
   const screenCornerRadius = clamp(
     Math.round(Math.min(screenWidth, screenHeight) * screenCornerRadiusRatio),
     72,
-    172,
+    200,
   );
   const phoneCornerRadius = clamp(
     screenCornerRadius + Math.round(frameBorder * 1.65),
