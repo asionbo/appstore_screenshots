@@ -18,7 +18,7 @@
         "mode": "manual"
     },
     "layout": {
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#F1F3F2",
         "titleAreaRatio": 0.2,
         "outerPaddingRatio": 0.05,
         "phoneBorderRatio": 0.024,
@@ -30,124 +30,124 @@
     },
     "screenshots": [
         {
-            "imagePath": "./assets/source/v7_1.png",
-            "title": "极简操作",
+            "imagePath": "./assets/source/v8_1.png",
+            "title": "装备管理，规划行囊",
             "localizedTitles": {
-                "zh_Hant": "極簡操作",
-                "ko": "간편한 조작",
-                "ja": "シンプル操作",
-                "fr": "Utilisation simple",
-                "de": "Einfache Bedienung",
-                "es": "Uso sencillo",
-                "en": "Simple controls",
-                "nl": "Eenvoudige bediening"
+                "zh_Hant": "裝備與行囊規劃",
+                "ko": "장비 및 패킹 플래너",
+                "ja": "ギア＆パッキングプランナー",
+                "fr": "Planificateur d'équipement et de bagages",
+                "de": "Ausrüstungs- und Packplaner",
+                "es": "Planificador de equipo y equipaje",
+                "en": "Gear & Packing Planner",
+                "nl": "Uitrusting- en pakplanner"
             },
-            "outputName": "v7_1"
+            "outputName": "v8_1"
         },
         {
-            "imagePath": "./assets/source/v7_2.png",
-            "title": "数据精准",
+            "imagePath": "./assets/source/v8_2.png",
+            "title": "自动计算重量",
             "localizedTitles": {
-                "zh_Hant": "數據精準",
-                "ko": "정확한 데이터",
-                "ja": "正確なデータ",
-                "fr": "Données précises",
-                "de": "Präzise Daten",
-                "es": "Datos precisos",
-                "en": "Accurate data",
-                "nl": "Nauwkeurige gegevens"
+                "zh_Hant": "自動計算重量",
+                "ko": "무게 자동 계산",
+                "ja": "重量を自動計算",
+                "fr": "Calculez automatiquement le poids",
+                "de": "Gewicht automatisch berechnen",
+                "es": "Calcula el peso automáticamente",
+                "en": "Calculate weight automatically",
+                "nl": "Bereken het gewicht automatisch"
             },
-            "outputName": "v7_2"
+            "outputName": "v8_2"
         },
         {
-            "imagePath": "./assets/source/v7_3.png",
-            "title": "多种展示",
+            "imagePath": "./assets/source/v8_3.png",
+            "title": "标签筛选",
             "localizedTitles": {
-                "zh_Hant": "多種展示",
-                "ko": "다양한 보기",
-                "ja": "複数の表示",
-                "fr": "Plusieurs affichages",
-                "de": "Mehrere Ansichten",
-                "es": "Vistas múltiples",
-                "en": "Multiple views",
-                "nl": "Meerdere weergaven"
+                "zh_Hant": "標籤篩選",
+                "ko": "태그 필터링",
+                "ja": "タグで絞り込み",
+                "fr": "Filtrez par étiquette",
+                "de": "Nach Tags filtern",
+                "es": "Filtra por etiquetas",
+                "en": "Filter by tag",
+                "nl": "Filter op tag"
             },
-            "outputName": "v7_3"
+            "outputName": "v8_3"
         },
         {
-            "imagePath": "./assets/source/v7_4.png",
-            "title": "装备可视化",
+            "imagePath": "./assets/source/v8_4.png",
+            "title": "打包清单",
             "localizedTitles": {
-                "zh_Hant": "裝備視覺化",
-                "ko": "장비 시각화",
-                "ja": "装備の可視化",
-                "fr": "Visualisation de l'équipement",
-                "de": "Ausrüstung visuell darstellen",
-                "es": "Visualización del equipo",
-                "en": "Equipment visualization",
-                "nl": "Uitrusting zichtbaar maken"
+                "zh_Hant": "打包清單",
+                "ko": "패킹 목록",
+                "ja": "パッキングリスト",
+                "fr": "Liste de préparation",
+                "de": "Packliste",
+                "es": "Lista de equipaje",
+                "en": "Packing list",
+                "nl": "Paklijst"
             },
-            "outputName": "v7_4"
+            "outputName": "v8_4"
         },
         {
-            "imagePath": "./assets/source/v7_5.png",
-            "title": "总览全局",
+            "imagePath": "./assets/source/v8_5.png",
+            "title": "按天分配",
             "localizedTitles": {
-                "zh_Hant": "總覽全局",
-                "ko": "전체 한눈에",
-                "ja": "全体を把握",
-                "fr": "Vue d'ensemble",
-                "de": "Alles im Blick",
-                "es": "Vista general",
-                "en": "Full overview",
-                "nl": "Volledig overzicht"
+                "zh_Hant": "按天分配",
+                "ko": "날짜별 배분",
+                "ja": "日ごとに割り当て",
+                "fr": "Répartition par jour",
+                "de": "Nach Tagen aufteilen",
+                "es": "Distribución por día",
+                "en": "Assign by day",
+                "nl": "Per dag indelen"
             },
-            "outputName": "v7_5"
+            "outputName": "v8_5"
         },
         {
-            "imagePath": "./assets/source/v7_6.png",
-            "title": "详尽计划",
+            "imagePath": "./assets/source/v8_6.png",
+            "title": "装备墙",
             "localizedTitles": {
-                "zh_Hant": "詳盡計畫",
-                "ko": "세부 계획",
-                "ja": "詳しい計画",
-                "fr": "Plan détaillé",
-                "de": "Detaillierter Plan",
-                "es": "Plan detallado",
-                "en": "Detailed plan",
-                "nl": "Gedetailleerd plan"
+                "zh_Hant": "裝備牆",
+                "ko": "장비 보드",
+                "ja": "装備ウォール",
+                "fr": "Mur d'équipement",
+                "de": "Ausrüstungsübersicht",
+                "es": "Panel de equipo",
+                "en": "Gear wall",
+                "nl": "Uitrustingsmuur"
             },
-            "outputName": "v7_6"
+            "outputName": "v8_6"
         },
         {
-            "imagePath": "./assets/source/v7_7.png",
-            "title": "明细清晰",
+            "imagePath": "./assets/source/v8_7.png",
+            "title": "多样分享",
             "localizedTitles": {
-                "zh_Hant": "明細清晰",
-                "ko": "세부가 선명",
-                "ja": "明細が見やすい",
-                "fr": "Détails clairs",
-                "de": "Klare Details",
-                "es": "Detalles claros",
-                "en": "Clear details",
-                "nl": "Duidelijke details"
+                "zh_Hant": "多樣分享",
+                "ko": "다양한 공유",
+                "ja": "さまざまな共有",
+                "fr": "Partage polyvalent",
+                "de": "Vielseitig teilen",
+                "es": "Compartir de varias formas",
+                "en": "Share in multiple ways",
+                "nl": "Op meerdere manieren delen"
             },
-            "outputName": "v7_7"
+            "outputName": "v8_7"
         },
         {
-            "imagePath": "./assets/source/v7_8.png",
-            "title": "整装待发",
+            "imagePath": "./assets/source/v8_8.png",
+            "title": "暗夜模式",
             "localizedTitles": {
-                "zh_Hant": "整裝待發",
-                "ko": "준비 완료",
-                "ja": "準備万端",
-                "fr": "Prêt à partir",
-                "de": "Startklar",
-                "es": "Listo para salir",
-                "en": "Ready to go",
-                "nl": "Klaar om te gaan"
+                "zh_Hant": "暗夜模式",
+                "ko": "암야 모드",
+                "ja": "暗闇モード",
+                "fr": "Mode nuit",
+                "de": "Nachtmodus",
+                "es": "Modo noche",
+                "en": "Night mode",
+                "nl": "Nachtmodus"
             },
-            "outputName": "v7_8"
+            "outputName": "v8_8"
         }
     ]
 }
