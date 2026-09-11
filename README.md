@@ -26,6 +26,9 @@ The example writes files to `./output`.
     "sourceLocale": "en",
     "mode": "manual"
   },
+  "layout": {
+    "backgroundSource": "./assets/example/background.png"
+  },
   "screenshots": [
     {
       "imagePath": "./assets/example/input.png",
@@ -38,6 +41,10 @@ The example writes files to `./output`.
   ]
 }
 ```
+
+## Background image
+
+Set `layout.backgroundSource` to an image path (relative to the config file) to use it as the full-canvas background instead of the flat `backgroundColor`. The image is resized to cover the whole canvas, and the title and phone-framed screenshot are composited on top.
 
 ## Translation modes
 

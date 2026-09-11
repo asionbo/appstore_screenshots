@@ -126,16 +126,30 @@ export async function loadConfig(configPath) {
     }
   }
 
+  const layout = {
+    ...DEFAULT_LAYOUT,
+    ...(parsed.layout ?? {}),
+  };
+
+  if (layout.backgroundSource != null) {
+    assert(
+      typeof layout.backgroundSource === "string" && layout.backgroundSource.trim(),
+      "layout.backgroundSource must be a non-empty string when provided.",
+    );
+    layout.backgroundSource = path.resolve(configDir, layout.backgroundSource);
+    assert(
+      await fileExists(layout.backgroundSource),
+      `layout.backgroundSource does not exist: ${layout.backgroundSource}`,
+    );
+  }
+
   return {
     width: parsed.width,
     height: parsed.height,
     outputDir: path.resolve(configDir, parsed.outputDir),
     locales,
     translation,
-    layout: {
-      ...DEFAULT_LAYOUT,
-      ...(parsed.layout ?? {}),
-    },
+    layout,
     screenshots,
     configPath: absoluteConfigPath,
   };

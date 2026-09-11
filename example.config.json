@@ -18,6 +18,7 @@
         "mode": "manual"
     },
     "layout": {
+        "backgroundSource": "./assets/source/background/bg.png",
         "backgroundColor": "#F1F3F2",
         "titleAreaRatio": 0.2,
         "outerPaddingRatio": 0.05,

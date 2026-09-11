@@ -169,14 +169,23 @@ export async function renderScreenshot({ config, screenshot, title }) {
     .png()
     .toBuffer();
 
-  return sharp({
-    create: {
-      width: config.width,
-      height: config.height,
-      channels: 4,
-      background: config.layout.backgroundColor,
-    },
-  })
+  const canvas = config.layout.backgroundSource
+    ? sharp(config.layout.backgroundSource).resize({
+        width: config.width,
+        height: config.height,
+        fit: "cover",
+        position: "centre",
+      })
+    : sharp({
+        create: {
+          width: config.width,
+          height: config.height,
+          channels: 4,
+          background: config.layout.backgroundColor,
+        },
+      });
+
+  return canvas
     .composite([
       {
         input: createTitleSvg({
