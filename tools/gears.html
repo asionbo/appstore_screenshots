@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gears Tiler</title>
+<style>
+  :root { --bg:#f6f7f9; --panel:#fff; --line:#e2e5ea; --text:#1c2430; --muted:#69737f; --accent:#2f6fed; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.4 -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--text); display:flex; height:100vh; }
+  aside { width:300px; min-width:240px; background:var(--panel); border-right:1px solid var(--line); overflow-y:auto; padding:14px; flex-shrink:0; }
+  h1 { font-size:15px; margin:2px 0 10px; }
+  .row { display:flex; gap:8px; align-items:center; margin-bottom:10px; flex-wrap:wrap; }
+  button { border:1px solid var(--line); background:var(--panel); border-radius:6px; padding:5px 10px; cursor:pointer; font:inherit; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  label.ctl { display:flex; justify-content:space-between; align-items:center; gap:8px; margin:8px 0; color:var(--muted); }
+  label.ctl input[type=range] { flex:1; }
+  .pick { display:flex; gap:8px; align-items:center; padding:6px; border:1px solid var(--line); border-radius:8px; margin-bottom:6px; cursor:pointer; background:var(--panel); }
+  .pick.on { border-color:var(--accent); background:#eef3fe; }
+  .pick img { width:44px; height:44px; object-fit:contain; background:#f0f1f3; border-radius:4px; }
+  .pick .name { font-size:11px; color:var(--muted); word-break:break-all; }
+  main { flex:1; overflow:auto; padding:14px; display:flex; flex-direction:column; gap:10px; }
+  #stage { background:#fff; border:1px solid var(--line); border-radius:10px; align-self:center; max-width:100%; }
+  #stage canvas { display:block; width:100%; height:auto; border-radius:10px; }
+  .hint { color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Gears Tiler <span class="hint">(3840×1646)</span></h1>
+  <div class="row">
+    <button id="all">Select all</button>
+    <button id="none">Clear</button>
+  </div>
+  <div id="list"></div>
+  <div class="row" style="margin-top:12px; border-top:1px solid var(--line); padding-top:12px;">
+    <button id="png" class="primary">Save PNG</button>
+    <button id="html">Save HTML</button>
+  </div>
+  <div class="hint">PNG is exported at exact 3840×1646 from the same canvas used for preview.</div>
+</aside>
+<main>
+  <div>
+    <label class="ctl">Columns <input id="cols" type="range" min="1" max="18" value="6" /><b id="colsv">6</b></label>
+    <label class="ctl">Gap <input id="gap" type="range" min="0" max="80" value="16" /><b id="gapv">16</b></label>
+    <label class="ctl">Angle <input id="angle" type="range" min="0" max="90" value="45" /><b id="anglev">45°</b></label>
+    <label class="ctl"><input id="tilt" type="checkbox" checked /> Tilted collage (full-bleed)</label>
+    <label class="ctl">Background <input id="bg" type="color" value="#f0f1f3" /></label>
+    <label class="ctl">Tile bg <input id="tilebg" type="color" value="#ffffff" /></label>
+    <label class="ctl">Tile radius <input id="radius" type="range" min="0" max="200" value="24" /><b id="radiusv">24</b></label>
+    <label class="ctl"><input id="stretch" type="checkbox" checked /> Fill cells (crop to cover)</label>
+  </div>
+  <div id="stage"><canvas id="cv" width="3840" height="1646"></canvas></div>
+  <div class="hint" id="status"></div>
+</main>
+
+<script>
+const DIR = "/gears/";
+const W = 3840, H = 1646;
+const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+let images = []; // {name, img, w, h, selected}
+
+const list = document.getElementById("list");
+const $ = (id) => document.getElementById(id);
+
+fetch(DIR).then(r => r.text()).then(html => {
+  const names = [...new DOMParser().parseFromString(html, "text/html")
+    .querySelectorAll("a")].map(a => a.getAttribute("href").split("/").pop())
+    .filter(h => /\.(png|jpe?g|webp|gif)$/i.test(h));
+  Promise.all(names.map(name => new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => { images.push({ name, img, w: img.naturalWidth, h: img.naturalHeight, selected: true }); resolve(); };
+    img.onerror = () => { console.warn("failed to load", name); resolve(); };
+    img.src = DIR + encodeURIComponent(name);
+  }))).then(() => { images.sort((a, b) => a.name.localeCompare(b.name)); buildList(); draw(); });
+});
+
+function buildList() {
+  list.innerHTML = "";
+  for (const it of images) {
+    const el = document.createElement("div");
+    el.className = "pick" + (it.selected ? " on" : "");
+    el.innerHTML = `<img src="${it.img.src}" alt=""><div class="name">${it.name}</div>`;
+    el.onclick = () => { it.selected = !it.selected; el.classList.toggle("on", it.selected); draw(); };
+    list.appendChild(el);
+  }
+  $("status").textContent = `${images.length} images · ${images.filter(i => i.selected).length} selected`;
+}
+$("all").onclick = () => { images.forEach(i => i.selected = true); buildList(); draw(); };
+$("none").onclick = () => { images.forEach(i => i.selected = false); buildList(); draw(); };
+for (const id of ["cols", "gap"]) $(id).oninput = () => { $(id + "v").textContent = $(id).value; draw(); };
+$("angle").oninput = () => { $("anglev").textContent = $("angle").value + "°"; draw(); };
+$("tilt").onchange = draw;
+$("bg").oninput = draw;
+$("tilebg").oninput = draw;
+for (const id of ["radius"]) $(id).oninput = () => { $(id + "v").textContent = $(id).value; draw(); };
+$("stretch").onchange = draw;
+
+function drawTile(it, x, y, cw, ch) {
+  const cover = $("stretch").checked, tileBg = $("tilebg").value, r = +$("radius").value;
+  const s = cover ? Math.max(cw / it.w, ch / it.h) : Math.min(cw / it.w, ch / it.h);
+  const w = it.w * s, h = it.h * s;
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(x, y, cw, ch, r);   // rounded card path; r=0 → plain rect
+  ctx.clip();
+  ctx.fillStyle = tileBg;           // card behind the gear image
+  ctx.fillRect(x, y, cw, ch);
+  ctx.drawImage(it.img, x + (cw - w) / 2, y + (ch - h) / 2, w, h);
+  ctx.restore();
+}
+
+function draw() {
+  const sel = images.filter(i => i.selected);
+  const cols = +$("cols").value, gap = +$("gap").value, bg = $("bg").value, cover = $("stretch").checked;
+  const deg = +$("angle").value, tilt = $("tilt").checked;
+  $("status").textContent = `${images.length} images · ${sel.length} selected`;
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+  if (!sel.length) return;
+  if (tilt) {
+    // Grid big enough to cover the rotated canvas, centered and rotated as one block.
+    const rad = deg * Math.PI / 180, c = Math.abs(Math.cos(rad)), s = Math.abs(Math.sin(rad));
+    const coverW = W * c + H * s, coverH = W * s + H * c;
+    const cw = (coverW - gap * (cols - 1)) / cols;
+    const ch = cw; // square cells, like the reference
+    const rows = Math.ceil((coverH - gap) / (cw + gap)) + 1; // +1 row of bleed
+    const gridW = cols * cw + (cols - 1) * gap, gridH = rows * ch + (rows - 1) * gap;
+    ctx.save();
+    ctx.translate(W / 2, H / 2);
+    ctx.rotate(rad);
+    let k = 0;
+    for (let r = 0; r < rows; r++)
+      for (let i = 0; i < cols; i++)
+        drawTile(sel[k++ % sel.length], -gridW / 2 + i * (cw + gap), -gridH / 2 + r * (ch + gap), cw, ch);
+    ctx.restore();
+  } else {
+    const rows = Math.ceil(sel.length / cols);
+    const cw = (W - gap * (cols - 1)) / cols;
+    const ch = (H - gap * (rows - 1)) / rows;
+    sel.forEach((it, i) =>
+      drawTile(it, (i % cols) * (cw + gap), Math.floor(i / cols) * (ch + gap), cw, ch));
+  }
+}
+
+function download(blob, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+$("png").onclick = () => cv.toBlob(b => download(b, "gears-tiled-3840x1646.png"), "image/png");
+
+$("html").onclick = () => {
+  // Standalone preview: re-tiles the same selection from original files, exact pixel size.
+  const sel = images.filter(i => i.selected).map(i => DIR + encodeURIComponent(i.name));
+  const cols = +$("cols").value, gap = +$("gap").value, bg = $("bg").value, cover = $("stretch").checked;
+  const deg = +$("angle").value, tilt = $("tilt").checked, tilebg = $("tilebg").value, radius = +$("radius").value;
+  const page = `<!doctype html><meta charset=utf-8><title>gears tiled</title>
+<style>body{margin:0;background:${bg}}#g{position:relative;width:3840px;height:1646px;overflow:hidden;background:${bg}}#g .c{position:absolute;overflow:hidden;background:${tilebg};border-radius:${radius}px}</style>
+<div id=g></div>
+<script>
+const files=${JSON.stringify(sel)};
+const cover=${cover},deg=${deg},tilt=${tilt},cols=${cols},gap=${gap},W=3840,H=1646;
+function place(src,x,y,cw,ch){
+  const d=document.createElement("div");d.className="c";
+  d.style.cssText="left:"+x+"px;top:"+y+"px;width:"+cw+"px;height:"+ch+"px";
+  const im=d.appendChild(new Image());
+  im.onload=()=>{const s=cover?Math.max(cw/im.width,ch/im.height):Math.min(cw/im.width,ch/im.height);
+    im.style.cssText="position:absolute;left:"+((cw-im.width*s)/2)+"px;top:"+((ch-im.height*s)/2)+"px;width:"+im.width*s+"px;height:"+im.height*s+"px";};
+  im.src=src;document.getElementById("g").appendChild(d);
+}
+let loaded=0;
+files.forEach(src=>{const im=new Image();im.onload=()=>{if(++loaded===files.length)build()};im.src=src});
+function build(){
+  if(tilt){
+    const r=deg*Math.PI/180,c=Math.abs(Math.cos(r)),s=Math.abs(Math.sin(r));
+    const coverW=W*c+H*s,coverH=W*s+H*c;
+    const cw=(coverW-gap*(cols-1))/cols,ch=cw;
+    const rows=Math.ceil((coverH-gap)/(cw+gap))+1;
+    const wrap=document.createElement("div");
+    wrap.style.cssText="position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate("+deg+"deg)";
+    document.getElementById("g").appendChild(wrap);
+    let k=0;
+    for(let row=0;row<rows;row++)for(let i=0;i<cols;i++){
+      const x=-((cols*cw+(cols-1)*gap)/2)+i*(cw+gap);
+      const y=-((rows*ch+(rows-1)*gap)/2)+row*(ch+gap);
+      const d=document.createElement("div");d.className="c";
+      d.style.cssText="left:"+x+"px;top:"+y+"px;width:"+cw+"px;height:"+ch+"px";
+      const im=d.appendChild(new Image());
+      im.onload=()=>{const sc=Math.max(cw/im.width,ch/im.height);
+        im.style.cssText="position:absolute;left:"+((cw-im.width*sc)/2)+"px;top:"+((ch-im.height*sc)/2)+"px;width:"+im.width*sc+"px;height:"+im.height*sc+"px";};
+      im.src=files[k++%files.length];wrap.appendChild(d);
+    }
+  }else{
+    const rows=Math.ceil(files.length/cols);
+    const cw=(W-gap*(cols-1))/cols,ch=(H-gap*(rows-1))/rows;
+    files.forEach((src,i)=>place(src,(i%cols)*(cw+gap),Math.floor(i/cols)*(ch+gap),cw,ch));
+  }
+}
+<\/script>`;
+  download(new Blob([page], { type: "text/html" }), "gears-tiled-preview.html");
+};
+</script>
+</body>
+</html>
